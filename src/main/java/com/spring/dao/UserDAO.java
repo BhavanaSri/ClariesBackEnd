@@ -1,10 +1,10 @@
 package com.spring.dao;
 
-import com.spring.model.Users;
+import com.spring.model.User;
 
 public interface UserDAO {
 
 	
-	public boolean saveUser(Users user);
+	public boolean saveUser(User user);
 	
 }
