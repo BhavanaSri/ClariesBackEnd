@@ -27,20 +27,22 @@ public class CategoryDAOImpl implements CategoryDAO
 	}
 
 	@Transactional
+	@override
 	public boolean addCategory(Category category) 
 	{
 		try
 		{
 		Session session=sessionFactory.getCurrentSession();
-		session.save(category);
+		session.saveOrUpdate(category);
 		return true;
 		}
 		catch(Exception e)
 		{
+			System.out.println(e.getMessage());
 		return false;
 		}
 	}
-
+	@Transactional
 	public List<Category> retrieveCategory() 
 	{
 		Session session=sessionFactory.openSession();
@@ -52,31 +54,35 @@ public class CategoryDAOImpl implements CategoryDAO
 		return listCategory;
 	}
 
-	@Transactional
-	public boolean deleteCategory(Category category) 
-	{	
-		try
-		{
-		Session session=sessionFactory.getCurrentSession();
-		session.delete(category);
-		return true;
-		}
-		catch(Exception e)
-		{
-		System.out.println("Exception Arised:"+e);	
-		return false;
-		}
-	}
+	 @Transactional
+	    public Category deleteCategory(int category_id) 
+	    {   
+	    Category CategoryToDelete = new Category();
+			CategoryToDelete.setCatId(category_id);
+			sessionFactory.getCurrentSession().delete(CategoryToDelete);
+			return CategoryToDelete;
+			
+	    }
+	 @Transactional
+		@override
 
 	public Category getCategory(int catId) 
-	{
-		Session session=sessionFactory.openSession();
-		Category category=(Category)session.get(Category.class,catId);
-		session.close();
-		return category;
-	}
+	 {
+			String hql = "from"+" Category"+" where id=" + catId;
+			@SuppressWarnings("rawtypes")
+			Query query = sessionFactory.getCurrentSession().createQuery(hql);
+			
+			@SuppressWarnings("unchecked")
+			List<Category> listCategory = (List<Category>) query.list();
+			
+			if (listCategory != null && !listCategory.isEmpty()) {
+				return listCategory.get(0);
+			}
+			return null;
+	 }
 
 	@Transactional
+	@override
 	public boolean updateCategory(Category category) 
 	{
 		try
@@ -90,5 +96,12 @@ public class CategoryDAOImpl implements CategoryDAO
 		return false;
 		}
 	}
+
+	public Category deleteCategory(Category category) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 	
 }
