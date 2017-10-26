@@ -97,10 +97,6 @@ public class CategoryDAOImpl implements CategoryDAO
 		}
 	}
 
-	public Category deleteCategory(Category category) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	
 	

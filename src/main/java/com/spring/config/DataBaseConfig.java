@@ -64,6 +64,15 @@ public class DataBaseConfig
 			System.out.println("Transaction");
 			return transactionManager;
 		}
+		
+
+		@Autowired
+		@Bean(name="categoryDAO")
+		public CategoryDAO getCategory(SessionFactory sessionFactory)
+		{
+			return new CategoryDAOImpl(sessionFactory);
+			
+		}
 	@Autowired
 	@Bean(name = "userDAO")
 	public UserDAO getUserDAO(SessionFactory sessionFactory) {
@@ -77,13 +86,6 @@ public class DataBaseConfig
 	}
 	
 	
-	@Autowired
-	@Bean(name="categoryDAO")
-	public CategoryDAO getCategory(SessionFactory sessionFactory)
-	{
-		return new CategoryDAOImpl(sessionFactory);
-		
-	}
 	
 	@Autowired
 	@Bean(name="supplierDAO")

@@ -8,6 +8,8 @@ public class Supplier
 	
 
 	@Id
+	@GeneratedValue
+	
 	int supId;
 	
 	String supName,supDesc, supAddress;

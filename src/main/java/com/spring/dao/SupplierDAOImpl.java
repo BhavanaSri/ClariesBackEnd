@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.spring.dao.SupplierDAO;
+import com.spring.model.Category;
 import com.spring.model.Supplier;
 
 @SuppressWarnings("deprecation")
@@ -29,7 +30,7 @@ public class SupplierDAOImpl implements SupplierDAO
 		try
 		{
 		Session session=sessionFactory.getCurrentSession();
-		session.save(supplier);
+		session.saveOrUpdate(supplier);
 		return true;
 		}
 		catch(Exception e)
@@ -39,6 +40,7 @@ public class SupplierDAOImpl implements SupplierDAO
 		}
 	}
 
+	@Transactional
 	public List<Supplier> retrieveSupplier() 
 	{
 		Session session=sessionFactory.openSession();
@@ -50,7 +52,7 @@ public class SupplierDAOImpl implements SupplierDAO
 		return listSupplier;
 	}
 
-	@Transactional
+	/*@Transactional
 	public boolean deleteSupplier(Supplier Supplier) 
 	{	
 		try
@@ -64,8 +66,9 @@ public class SupplierDAOImpl implements SupplierDAO
 		System.out.println("Exception Arised:"+e);	
 		return false;
 		}
-	}
+	}*/
 
+	@Transactional
 	public Supplier getSupplier(int supId) 
 	{
 		Session session=sessionFactory.openSession();
@@ -74,7 +77,7 @@ public class SupplierDAOImpl implements SupplierDAO
 		return Supplier;
 	}
 
-	@Transactional
+	/*@Transactional
 	public boolean updateSupplier(Supplier Supplier) 
 	{
 		try
@@ -87,6 +90,31 @@ public class SupplierDAOImpl implements SupplierDAO
 		System.out.println("Exception Arised:"+e);
 		return false;
 		}
+	}*/
+@Transactional
+	public boolean deleteSupplier(int supId) {
+		Session session = sessionFactory.getCurrentSession();
+		Object peristanceInstance = session.load(Supplier.class, supId);
+		
+		if(peristanceInstance != null){
+			session.delete(peristanceInstance);
+			System.out.println("Category deleted successfully");
+		}
+		
+		return true;
+	
 	}
+@Transactional
+	public boolean updateSupplier(int supId) {
+		try
+		{
+		sessionFactory.getCurrentSession().saveOrUpdate(supId);
+		return true;
+		}
+		catch(Exception e)
+		{
+		System.out.println("Exception Arised:"+e);
+		return false;
+		}	}
 	
 }

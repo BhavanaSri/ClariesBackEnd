@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 public class Category 
 {
     @Id
-   
+    @GeneratedValue
     int catId;
      
     String catName,catDesc;
